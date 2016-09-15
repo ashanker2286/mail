@@ -61,8 +61,9 @@ func main() {
 			}
 			var alarmState AlarmState
 			_ = json.Unmarshal(message, &alarmState)
-			alarmMsg := "OwnerName:" + alarmState.OwnerName + "\r\n" + "Event Name:" + alarmState.EventName + "\r\n" + "Object that caused Alarm:" + alarmState.SrcObjName + alarmState.SrcObjKey + "\r\n" + "UUID of the Object that caused Alarm:" + alarmState.SrcObjUUID + "\r\n" + "ResolutionTime:" + alarmState.ResolutionTime + "\r\n" + "ResolutionReason:" + alarmState.ResolutionReason
-			body := fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s\r\n\r\n%s", *to, "Alarm", alarmMsg, *from)
+			alarmMsg := "OwnerName: " + alarmState.OwnerName + "\r\n" + "Event Name: " + alarmState.EventName + "\r\n" + "Description: " + alarmState.Description + "\r\n" + "Object that caused Alarm: " + alarmState.SrcObjName + alarmState.SrcObjKey + "\r\n" + "UUID of the Object that caused Alarm: " + alarmState.SrcObjUUID + "\r\n" + "ResolutionTime: " + alarmState.ResolutionTime + "\r\n" + "ResolutionReason: " + alarmState.ResolutionReason
+			subject := "Alarm from " + *addr
+			body := fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s\r\n\r\n%s", *to, subject, alarmMsg, "support@snaproute.com")
 			auth := smtp.PlainAuth("", *from, *pwd, "smtp.gmail.com")
 			err = smtp.SendMail("smtp.gmail.com:587", auth, *from,
 				[]string{*to}, []byte(body))
