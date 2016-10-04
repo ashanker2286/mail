@@ -61,7 +61,7 @@ func main() {
 			}
 			var alarmState AlarmState
 			_ = json.Unmarshal(message, &alarmState)
-			alarmMsg := "OwnerName: " + alarmState.OwnerName + "\r\n" + "Event Name: " + alarmState.EventName + "\r\n" + "Description: " + alarmState.Description + "\r\n" + "Object that caused Alarm: " + alarmState.SrcObjName + alarmState.SrcObjKey + "\r\n" + "UUID of the Object that caused Alarm: " + alarmState.SrcObjUUID + "\r\n" + "ResolutionTime: " + alarmState.ResolutionTime + "\r\n" + "ResolutionReason: " + alarmState.ResolutionReason
+			alarmMsg := "Event Name: " + alarmState.EventName + "\r\n" + "Object: " + alarmState.SrcObjName + "\r\n " + alarmState.SrcObjKey + "\r\n" + "Occurance Time: " + alarmState.OccuranceTime + "\r\nResolution Time: " + alarmState.ResolutionTime + "\r\n" + "Resolution Reason: " + alarmState.ResolutionReason
 			subject := "Alarm from " + *addr
 			body := fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s\r\n\r\n%s", *to, subject, alarmMsg, "support@snaproute.com")
 			auth := smtp.PlainAuth("", *from, *pwd, "smtp.gmail.com")
